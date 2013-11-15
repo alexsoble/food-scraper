@@ -16,6 +16,10 @@ task :scrape => :environment do
     puts restaurant
   end
   
+end 
+
+task :send_scraping_email => :environment do
+
   UserMailer.scraping_email.deliver
     
 end

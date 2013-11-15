@@ -11,6 +11,8 @@
     <ul>
       <% @yelp_restaurants.each do |r| %>
         <li><a href="<%= r.url %>"><%= r.name %></li>
+      <% end %>
     </ul>
+    <% end %>
   </body>
 </html>
