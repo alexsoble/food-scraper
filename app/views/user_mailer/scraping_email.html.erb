@@ -4,6 +4,13 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>We've found some new restaurants in Chicago for you!</h1>
+    <h1>We've found new restaurants in Chicago for you!</h1>
+    <br/>
+    <% if @yelp_restaurants.present? %>
+    <h2>From Yelp</h2>
+    <ul>
+      <% @yelp_restaurants.each do |r| %>
+        <li><a href="<%= r.url %>"><%= r.name %></li>
+    </ul>
   </body>
 </html>
