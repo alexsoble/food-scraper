@@ -4,10 +4,10 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>We've found new restaurants in Chicago for you!</h1>
+    <h2>We've found new restaurants leads for you:</h2>
     <br/>
     <% if @yelp_restaurants.present? %>
-    <h2>From Yelp</h2>
+    <h3>From Yelp</h3>
     <ul>
       <% @yelp_restaurants.each do |r| %>
         <li><a href="<%= r.url %>"><%= r.name %></li>
