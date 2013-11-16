@@ -22,8 +22,9 @@ class UserMailer < ActionMailer::Base
     @city_restaurants_liquor = Restaurant.where(:source => "City-Liquor", :sent => false)
 
     @url = "foodscraper.com"
-
-    mail(to: "asoble@gmail.com", subject: "Report: New restaurants")
+    @today = Time.now.strftime("%m/%e/%y")
+    
+    mail(to: "asoble@gmail.com", subject: "Report: New restaurants #{today}")
 
     @new_restaurants.each do |r|
       r.sent = true

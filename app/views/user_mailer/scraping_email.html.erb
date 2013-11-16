@@ -5,50 +5,53 @@
   </head>
   <body>
     <% if @new_restaurants.present? %>
-      <h2>We've found new restaurant leads for you:</h2>
+      <h2>We've found new restaurant leads for you.</h2>
       <br/>
       <% if @chicago.present? %>
         <h3>Chicago<h3>
         <% if @yelp_restaurants_chi.present? %>
-          <h4>From Yelp:</h4>
+          <h4>Via Yelp:</h4>
           <%= render "restaurant_website_view", :restaurants => @yelp_restaurants_chi %>
         <% end %>
         <% if @urbanspoon_restaurants_chi.present? %>
-          <h4>From Urbanspoon:</h4>
+          <h4>Via Urbanspoon:</h4>
           <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_chi %>
         <% end %>
         <% if @city_restaurants_food.present? %>
-          <h4>From the City Data Portal (food inspections):</h4>
+          <h4>Via the City Data Portal (food inspections):</h4>
           <%= render "restaurant_portal_view", :restaurants => @city_restaurants_food %>
         <% end %>
         <% if @city_restaurants_liquor.present? %>
-          <h4>From the City Data Portal (liquor licenses):</h4>
+          <h4>Via the City Data Portal (liquor licenses):</h4>
           <%= render "restaurant_portal_view", :restaurants => @city_restaurants_liquor %>
         <% end %>
+        <br/>
       <% end %>
 
       <% if @nyc.present? %>
         <h3>New York<h3>
         <% if @yelp_restaurants_chi.present? %>
-          <h4>From Yelp:</h4>
+          <h4>Via Yelp:</h4>
           <%= render "restaurant_website_view", :restaurants => @yelp_restaurants_nyc %>
         <% end %>
         <% if @urbanspoon_restaurants_chi.present? %>
-          <h4>From Urbanspoon:</h4>
+          <h4>Via Urbanspoon:</h4>
           <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_nyc %>
         <% end %>
+        <br/>
       <% end %>
 
       <% if @sf.present? %>
         <h3>San Francisco Bay<h3>
         <% if @yelp_restaurants_chi.present? %>
-          <h4>From Yelp:</h4>
+          <h4>Via Yelp:</h4>
           <%= render "restaurant_website_view", :restaurants => @yelp_restaurants_sf %>
         <% end %>
         <% if @urbanspoon_restaurants_chi.present? %>
-          <h4>From Urbanspoon:</h4>
+          <h4>Via Urbanspoon:</h4>
           <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_sf %>
         <% end %>
+        <br/>
       <% end %>
 
     <% else %>
