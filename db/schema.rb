@@ -11,16 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115162422) do
+ActiveRecord::Schema.define(:version => 20131116005750) do
 
   create_table "restaurants", :force => true do |t|
     t.string   "name"
     t.string   "address"
     t.string   "source"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "url"
     t.string   "context"
+    t.boolean  "sent",       :default => false
   end
 
 end

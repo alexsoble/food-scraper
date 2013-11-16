@@ -1,13 +1,4 @@
 # encoding: utf-8
-
-every 3.hours do
-  rake "scrape"
-end
-
-every 3.hours do
-  rake "send_scraping_email"
-end
-
 # Example:
 #
 # set :output, "/path/to/my/cron_log.log"

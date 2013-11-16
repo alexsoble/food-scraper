@@ -5,7 +5,10 @@ class UserMailer < ActionMailer::Base
   
   def scraping_email
 
-    @yelp_restaurants = Restaurant.where(:source => "Yelp")
+    @new_restaurants = Restaurant.where(:sent => false)
+    @yelp_restaurants = Restaurant.where(:source => "Yelp", :sent => false)
+    @city_restaurants_food = Restaurant.where(:source => "City-Food" :sent => false)
+    @city_restaurants_liquor = Restaurant.where(:source => "City-Liquor" :sent => false)
 
     @url = "foodscraper.com"
     mail(to: "asoble@gmail.com", subject: "Report: New restaurants in Chicago")

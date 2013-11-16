@@ -4,15 +4,35 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h2>We've found new restaurants leads for you:</h2>
-    <br/>
-    <% if @yelp_restaurants.present? %>
-    <h3>From Yelp</h3>
-    <ul>
-      <% @yelp_restaurants.each do |r| %>
-        <li><a href="<%= r.url %>"><%= r.name %></li>
+    <% if @new_restaurants.present? %>
+      <h2>We've found new restaurants leads for you:</h2>
+      <br/>
+      <% if @yelp_restaurants.present? %>
+      <h3>From Yelp</h3>
+      <ul>
+        <% @yelp_restaurants.each do |r| %>
+          <li><a href="<%= r.url %>"><%= r.name %></li>
+        <% end %>
+      </ul>
       <% end %>
-    </ul>
+      <% if @city_restaurants_food.present? %>
+      <h3>From the City Data Portal (food inspections):</h3>
+      <ul>
+        <% @city_restaurants_food.each do |r| %>
+          <li><%= r.name %>, <%= r.address %></li>
+        <% end %>
+      </ul>
+      <% end %>
+      <% if @city_restaurants_liquor.present? %>
+      <h3>From the City Data Portal (liquor licenses):</h3>
+      <ul>
+        <% @city_restaurants_liquor.each do |r| %>
+          <li><%= r.name %>, <%= r.address %></li>
+        <% end %>
+      </ul>
+      <% end %>
+    <% else %>
+      <h2>No new restaurants today.</h2>
     <% end %>
   </body>
 </html>
