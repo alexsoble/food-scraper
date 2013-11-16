@@ -11,7 +11,7 @@ task :scrape_websites => :environment do
   new_restaurants.css('.biz-shim').each do |link|
     name = link.content.strip!
     href = link['href']
-    restaurant = Restaurant.create({name: name, url: "http://www.yelp.com/#{href}", source: "Yelp"})
+    @restaurant = Restaurant.create({name: name, url: "http://www.yelp.com/#{href}", source: "Yelp"})
   end
   
 
@@ -42,13 +42,15 @@ task :scrape_city_portal => :environment do
   recent_inspections = HTTParty.get("http://data.cityofchicago.org/resource/4ijn-s7e5.json")[0..40]
   license_inspections = recent_inspections.reject { |i| i["inspection_type"] != "License"  || i["facility_type"] != "Restaurant" }
   license_inspections.each do |l|
-    Restaurant.create({:name => l["dba_name"], :address => l["address"], :source => "City-Food"})
+    @restaurant = Restaurant.create({:name => l["dba_name"], :address => l["address"], :source => "City-Food"})
+    puts @restaurant
   end
 
   recent_liquor_licenses = HTTParty.get("http://data.cityofchicago.org/resource/nrmj-3kcf.json")[0..40]
   new_liquor_licenses = recent_liquor_licenses.reject { |i| i["application_type"] != "ISSUE" }
   recent_liquor_licenses.each do |l|
-    Restaurant.create({:name => l["doing_business_as_name"], :address => l["address"], :source => "City-Liquor"})
+    @restaurant = Restaurant.create({:name => l["doing_business_as_name"], :address => l["address"], :source => "City-Liquor"})
+    puts @restaurant
   end
 
 end
