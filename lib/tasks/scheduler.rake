@@ -6,28 +6,24 @@ task :scrape_websites => :environment do
   require "mechanize" 
 
   agent = Mechanize.new
+
   yelp_page = agent.get('http://www.yelp.com/c/chicago/restaurants')
   new_restaurants = yelp_page.search('div.new-business-openings')
   new_restaurants.css('.biz-shim').each do |link|
     name = link.content.strip!
     href = link['href']
-    @restaurant = Restaurant.create({name: name, url: "http://www.yelp.com/#{href}", source: "Yelp"})
+    @restaurant = Restaurant.create({name: name, url: "http://www.yelp.com#{href}", source: "Yelp"})
+  end 
+
+  urbanspoon = agent.get('http://www.urbanspoon.com/lb/2/best-restaurants-Chicago?sort=date')
+  new_restaurants = urbanspoon.search('div.list.restaurants')
+  new_restaurant_list = new_restaurants.children[1]
+  new_restaurant_list.children[0..8].each do |new_restaurant|
+    new_restaurant_link = new_restaurant.css('a.resto_name')
+    name = new_restaurant_link.text.strip!
+    href = new_restaurant_link.attr('href')
+    @restaurant = Restaurant.create({name: name, url: "http://www.urbanspoon.com#{href}", source: "Urbanspoon"})
   end
-  
-
-  # sun_times = agent.get('http://www.suntimes.com/entertainment/dining/')
-  # new_restaurants = sun_times.search("[text()*='new restaurant']")
-  # new_restaurants.each do |new_restaurant|
-  #   if new_restaurant.name == "p"
-  #     context = new_restaurant.text[0,140]
-  #     new_restaurant.parent.css('a').each do |link|
-  #       pp link.attributes['href']['value']
-  #     end
-  #     restaurant = Restaurant.create({context: context, url: href, source: "Sun-Times"})
-  #   end
-  # end
-
-  # chicagoist = agent.get('http://chicagoist.com/')
 
 end 
 

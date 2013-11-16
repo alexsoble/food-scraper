@@ -8,9 +8,17 @@
       <h2>We've found new restaurant leads for you:</h2>
       <br/>
       <% if @yelp_restaurants.present? %>
-      <h3>From Yelp</h3>
+      <h3>From Yelp:</h3>
       <ul>
         <% @yelp_restaurants.each do |r| %>
+          <li><a href="<%= r.url %>"><%= r.name %></li>
+        <% end %>
+      </ul>
+      <% end %>
+      <% if @urbanspoon_restaurants.present? %>
+      <h3>From Urbanspoon:</h3>
+      <ul>
+        <% @urbanspoon_restaurants.each do |r| %>
           <li><a href="<%= r.url %>"><%= r.name %></li>
         <% end %>
       </ul>
