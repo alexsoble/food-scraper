@@ -23,8 +23,8 @@ class UserMailer < ActionMailer::Base
 
     @url = "foodscraper.com"
     @today = Time.now.strftime("%m/%e/%y")
-    
-    mail(to: "asoble@gmail.com", subject: "Report: New restaurants #{today}")
+
+    mail(to: "asoble@gmail.com", subject: "Report: New restaurants #{@today}")
 
     @new_restaurants.each do |r|
       r.sent = true
