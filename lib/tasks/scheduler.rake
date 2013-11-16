@@ -7,33 +7,52 @@ task :scrape_websites => :environment do
 
   agent = Mechanize.new
 
-  yelp_page = agent.get('http://www.yelp.com/c/chicago/restaurants')
-  new_restaurants = yelp_page.search('div.new-business-openings')
-  new_restaurants.css('.biz-shim').each do |link|
-    name = link.content.strip!
-    href = link['href']
-    @restaurant = Restaurant.create({name: name, url: "http://www.yelp.com#{href}", source: "Yelp"})
-  end 
+  yelp_cities = [
+    {:name => "Chicago", :url => 'http://www.yelp.com/c/chicago/restaurants'},
+    {:name => "SF Bay Area", :url => 'http://www.yelp.com/c/sf/restaurants'},
+    {:name => "New York", :url => 'http://www.yelp.com/c/nyc/restaurants'}
+  ]
 
-  urbanspoon = agent.get('http://www.urbanspoon.com/lb/2/best-restaurants-Chicago?sort=date')
-  new_restaurants = urbanspoon.search('div.list.restaurants')
-  new_restaurant_list = new_restaurants.children[1]
-  new_restaurant_list.children[0..8].each do |new_restaurant|
-    new_restaurant_link = new_restaurant.css('a.resto_name')
-    if new_restaurant_link.present?
-      name = new_restaurant_link.text.strip!
-      href = new_restaurant_link.attr('href')
-      @restaurant = Restaurant.create({name: name, url: "http://www.urbanspoon.com#{href}", source: "Urbanspoon"})
+  yelp_cities.each do |yelp_city|
+    yelp_page = agent.get(yelp_city[:url])
+    new_restaurants = yelp_page.search('div.new-business-openings')
+    new_restaurants.css('.biz-shim').each do |link|
+      name = link.content.strip!
+      href = link['href']
+      @restaurant = Restaurant.new({name: name, url: "http://www.yelp.com#{href}", source: "Yelp", city: yelp_city[:name]})
+      if @restaurant.save
+        puts "#{@restaurant.name}, #{@restaurant.url}, #{@restaurant.city}"
+      else
+        puts "Restaurant name already in database"
+      end
+    end
+  end
+
+  urbanspoon_cities = [
+    {:name => "Chicago", :url => "http://www.urbanspoon.com/lb/2/best-restaurants-Chicago?sort=date"},
+    {:name => "SF Bay Area", :url => "http://www.urbanspoon.com/lb/6/best-restaurants-SF-Bay-Area?sort=date"},
+    {:name => "New York", :url => "http://www.urbanspoon.com/lb/3/best-restaurants-New-York?sort=date"}
+  ]
+  urbanspoon_cities.each do |urbanspoon_city|
+    urbanspoon_page = agent.get(urbanspoon_city[:url])
+    new_restaurants = urbanspoon_page.search('div.list.restaurants')
+    new_restaurant_list = new_restaurants.children.css('ul')
+    new_restaurant_list.children[0..12].each do |new_restaurant|
+      new_restaurant_link = new_restaurant.css('a.resto_name')
+      if new_restaurant_link.present?
+        name = new_restaurant_link.text
+        href = new_restaurant_link.attr('href')
+        @restaurant = Restaurant.new({name: name, url: "http://www.urbanspoon.com#{href}", source: "Urbanspoon", city: urbanspoon_city[:name]})
+        if @restaurant.save
+          puts "#{@restaurant.name}, #{@restaurant.url}, #{@restaurant.city}"
+        else
+          puts "Restaurant name already in database"
+        end
+      end
     end
   end
 
 end 
-
-task :send_scraping_email => :environment do
-
-  UserMailer.scraping_email.deliver
-    
-end
 
 task :scrape_city_portal => :environment do
 
@@ -51,4 +70,10 @@ task :scrape_city_portal => :environment do
     puts @restaurant
   end
 
+end
+
+task :send_scraping_email => :environment do
+
+  UserMailer.scraping_email.deliver
+    
 end
