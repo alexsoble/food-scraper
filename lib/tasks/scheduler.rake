@@ -20,9 +20,11 @@ task :scrape_websites => :environment do
   new_restaurant_list = new_restaurants.children[1]
   new_restaurant_list.children[0..8].each do |new_restaurant|
     new_restaurant_link = new_restaurant.css('a.resto_name')
-    name = new_restaurant_link.text.strip!
-    href = new_restaurant_link.attr('href')
-    @restaurant = Restaurant.create({name: name, url: "http://www.urbanspoon.com#{href}", source: "Urbanspoon"})
+    if new_restaurant_link.present?
+      name = new_restaurant_link.text.strip!
+      href = new_restaurant_link.attr('href')
+      @restaurant = Restaurant.create({name: name, url: "http://www.urbanspoon.com#{href}", source: "Urbanspoon"})
+    end
   end
 
 end 
