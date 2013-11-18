@@ -30,11 +30,11 @@
 
       <% if @nyc.present? %>
         <h3>New York<h3>
-        <% if @yelp_restaurants_chi.present? %>
+        <% if @yelp_restaurants_nyc.present? %>
           <h4>Via Yelp:</h4>
           <%= render "restaurant_website_view", :restaurants => @yelp_restaurants_nyc %>
         <% end %>
-        <% if @urbanspoon_restaurants_chi.present? %>
+        <% if @urbanspoon_restaurants_nyc.present? %>
           <h4>Via Urbanspoon:</h4>
           <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_nyc %>
         <% end %>
@@ -43,11 +43,11 @@
 
       <% if @sf.present? %>
         <h3>San Francisco Bay<h3>
-        <% if @yelp_restaurants_chi.present? %>
+        <% if @yelp_restaurants_sf.present? %>
           <h4>Via Yelp:</h4>
           <%= render "restaurant_website_view", :restaurants => @yelp_restaurants_sf %>
         <% end %>
-        <% if @urbanspoon_restaurants_chi.present? %>
+        <% if @urbanspoon_restaurants_sf.present? %>
           <h4>Via Urbanspoon:</h4>
           <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_sf %>
         <% end %>
