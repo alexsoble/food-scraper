@@ -15,6 +15,10 @@ task :scrape_websites => :environment do
 
   yelp_cities.each do |yelp_city|
     yelp_page = agent.get(yelp_city[:url])
+    rescue Mechanize::ResponseCodeError => exception
+    if exception.response_code == '403'
+      puts exception
+    end
     new_restaurants = yelp_page.search('div.new-business-openings')
     new_restaurants.css('.biz-shim').each do |link|
       name = link.content.strip!
