@@ -68,9 +68,11 @@ task :scrape_city_portal => :environment do
   @today = Time.now.strftime("%Y-%m-%d")
   @yesterday = Time.now.yesterday.strftime("%Y-%m-%d")
 
-  recent_inspections = HTTParty.get("http://data.cityofchicago.org/resource/4ijn-s7e5.json?$where=date_issued='#{@yesterday}T00:00:00")
-  license_inspections = recent_inspections.reject { |i| i["inspection_type"] != "License"  || i["facility_type"] != "Restaurant" }
-  license_inspections.each do |l|
+  recent_inspections = HTTParty.get("http://data.cityofchicago.org/resource/4ijn-s7e5.json?$where=inspection_date='#{@yesterday}T00:00:00'")
+  recent_inspections = JSON.parse(recent_inspections.body)
+  recent_inspections = recent_inspections.reject { |i| i["inspection_type"] != "License" || i["facility_type"] != "Restaurant" }
+  
+  recent_inspections.each do |l|
     @restaurant = Restaurant.new({:name => l["dba_name"], :address => l["address"], :source => "City-Food", :city => "Chicago"})
     if @restaurant.save
       puts "#{@restaurant.name}, #{@restaurant.city}"
@@ -80,7 +82,9 @@ task :scrape_city_portal => :environment do
   end
 
   recent_liquor_licenses = HTTParty.get("http://data.cityofchicago.org/resource/nrmj-3kcf.json?$where=date_issued='#{@yesterday}T00:00:00'")
-  new_liquor_licenses = recent_liquor_licenses.reject { |i| i["application_type"] != "ISSUE" }
+  recent_liquor_licenses = JSON.parse(recent_liquor_licenses.body)
+  recent_liquor_licenses = recent_liquor_licenses.reject { |l| l["application_type"] != "ISSUE" }
+
   recent_liquor_licenses.each do |l|
     @restaurant = Restaurant.new({:name => l["doing_business_as_name"], :address => l["address"], :source => "City-Liquor", :city => "Chicago"})
     if @restaurant.save
