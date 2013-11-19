@@ -10,13 +10,16 @@ task :scrape_urbanspoon => :environment do
   urbanspoon_cities = [
     {:name => "Chicago", :url => "http://www.urbanspoon.com/lb/2/best-restaurants-Chicago?sort=date"},
     {:name => "SF Bay Area", :url => "http://www.urbanspoon.com/lb/6/best-restaurants-SF-Bay-Area?sort=date"},
-    {:name => "New York", :url => "http://www.urbanspoon.com/lb/3/best-restaurants-New-York?sort=date"}
+    {:name => "New York", :url => "http://www.urbanspoon.com/lb/3/best-restaurants-New-York?sort=date"},
+    {:name => "Boston", :url => "http://www.urbanspoon.com/lb/4/best-restaurants-Boston?sort=date"},
+    {:name => "L.A.", :url => "http://www.urbanspoon.com/lb/5/best-restaurants-Los-Angeles?sort=date"},
+    {:name => "Washington, D.C.", :url => "http://www.urbanspoon.com/lb/7/best-restaurants-Washington-DC?sort=date"}
   ]
   urbanspoon_cities.each do |urbanspoon_city|
     urbanspoon_page = agent.get(urbanspoon_city[:url])
     new_restaurants = urbanspoon_page.search('div.list.restaurants')
     new_restaurant_list = new_restaurants.children.css('ul')
-    new_restaurant_list.children[0..12].each do |new_restaurant|
+    new_restaurant_list.children[0..9].each do |new_restaurant|
       new_restaurant_link = new_restaurant.css('a.resto_name')
       if new_restaurant_link.present?
         name = new_restaurant_link.text
