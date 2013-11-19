@@ -1,36 +1,11 @@
 # encoding: utf-8
 
-task :scrape_websites => :environment do
+task :scrape_urbanspoon => :environment do
   require "nokogiri"
   require "httparty"
   require "mechanize" 
 
   agent = Mechanize.new
-
-  yelp_cities = [
-    {:name => "Chicago", :url => 'http://www.yelp.com/c/chicago/restaurants'},
-    {:name => "SF Bay Area", :url => 'http://www.yelp.com/c/sf/restaurants'},
-    {:name => "New York", :url => 'http://www.yelp.com/c/nyc/restaurants'}
-  ]
-
-  # yelp_cities.each do |yelp_city|
-  #   yelp_page = agent.get(yelp_city[:url])
-  #   rescue Mechanize::ResponseCodeError => exception
-  #   if exception.response_code == '403'
-  #     puts exception
-  #   end
-  #   new_restaurants = yelp_page.search('div.new-business-openings')
-  #   new_restaurants.css('.biz-shim').each do |link|
-  #     name = link.content.strip!
-  #     href = link['href']
-  #     @restaurant = Restaurant.new({name: name, url: "http://www.yelp.com#{href}", source: "Yelp", city: yelp_city[:name]})
-  #     if @restaurant.save
-  #       puts "#{@restaurant.name}, #{@restaurant.url}, #{@restaurant.city}"
-  #     else
-  #       puts "Restaurant name already in database"
-  #     end
-  #   end
-  # end
 
   urbanspoon_cities = [
     {:name => "Chicago", :url => "http://www.urbanspoon.com/lb/2/best-restaurants-Chicago?sort=date"},
@@ -57,6 +32,40 @@ task :scrape_websites => :environment do
   end
 
 end 
+
+task :scrape_yelp => :environment do
+  
+  require "nokogiri"
+  require "httparty"
+  require "mechanize" 
+
+  agent = Mechanize.new
+
+  yelp_cities = [
+    {:name => "Chicago", :url => 'http://www.yelp.com/c/chicago/restaurants'},
+    {:name => "SF Bay Area", :url => 'http://www.yelp.com/c/sf/restaurants'},
+    {:name => "New York", :url => 'http://www.yelp.com/c/nyc/restaurants'}
+  ]
+
+  yelp_cities.each do |yelp_city|
+    yelp_page = agent.get(yelp_city[:url])
+    # rescue Mechanize::ResponseCodeError => exception
+    # if exception.response_code == '403'
+    #   puts exception
+    # end
+    new_restaurants = yelp_page.search('div.new-business-openings')
+    new_restaurants.css('.biz-shim').each do |link|
+      name = link.content.strip!
+      href = link['href']
+      @restaurant = Restaurant.new({name: name, url: "http://www.yelp.com#{href}", source: "Yelp", city: yelp_city[:name]})
+      if @restaurant.save
+        puts "#{@restaurant.name}, #{@restaurant.url}, #{@restaurant.city}"
+      else
+        puts "Restaurant name already in database"
+      end
+    end
+  end
+end
 
 task :scrape_city_portal => :environment do
 
