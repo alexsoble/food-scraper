@@ -29,6 +29,7 @@ task :scrape_urbanspoon => :environment do
         @restaurant = Restaurant.new({name: name, url: "http://www.urbanspoon.com#{href}", source: "Urbanspoon", city: urbanspoon_city[:name]})
         if @restaurant.save
           puts "#{@restaurant.name}, #{@restaurant.url}, #{@restaurant.city}"
+          @restaurant.get_phone
         else
           puts "Restaurant name already in database"
         end

@@ -1,5 +1,5 @@
         <ul>
           <% restaurants.each do |r| %>
-            <li><a href="<%= r.url %>"><%= r.name %></a></li>
+            <li><a href="<%= r.url %>"><%= r.name %></a><% if r.phone.present? %>, <%= r.phone %><% end %></li>
           <% end %>
         </ul>
