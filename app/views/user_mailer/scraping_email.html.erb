@@ -54,7 +54,7 @@
         <br/>
       <% end %>
 
-      <%= if @urbanspoon_restaurants_boston.present? %>
+      <% if @urbanspoon_restaurants_boston.present? %>
         <h3>Boston<h3>
         <h4>Via Urbanspoon:</h4>
         <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_boston %>
