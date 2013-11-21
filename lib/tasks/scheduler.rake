@@ -13,7 +13,9 @@ task :scrape_urbanspoon => :environment do
     {:name => "New York", :url => "http://www.urbanspoon.com/lb/3/best-restaurants-New-York?sort=date"},
     {:name => "Boston", :url => "http://www.urbanspoon.com/lb/4/best-restaurants-Boston?sort=date"},
     {:name => "L.A.", :url => "http://www.urbanspoon.com/lb/5/best-restaurants-Los-Angeles?sort=date"},
-    {:name => "Washington, D.C.", :url => "http://www.urbanspoon.com/lb/7/best-restaurants-Washington-DC?sort=date"}
+    {:name => "Washington, D.C.", :url => "http://www.urbanspoon.com/lb/7/best-restaurants-Washington-DC?sort=date"},
+    {:name => "Denver", :url => "http://www.urbanspoon.com/lb/17/best-restaurants-Denver?sort=date"},
+    {:name => "Birmingham", :url => "http://www.urbanspoon.com/lb/45/best-restaurants-Birmingham?sort=date"}
   ]
   urbanspoon_cities.each do |urbanspoon_city|
     urbanspoon_page = agent.get(urbanspoon_city[:url])

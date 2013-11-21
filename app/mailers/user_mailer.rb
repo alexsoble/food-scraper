@@ -20,6 +20,12 @@ class UserMailer < ActionMailer::Base
       @yelp_restaurants_sf = Restaurant.where(:source => "Yelp", :city => "SF Bay Area", :sent => false)
       @urbanspoon_restaurants_sf = Restaurant.where(:source => "Urbanspoon", :city => "SF Bay Area", :sent => false)
 
+      @urbanspoon_restaurants_boston = Restaurant.where(:source => "Urbanspoon", :city => "Boston", :sent => false)
+      @urbanspoon_restaurants_la = Restaurant.where(:source => "Urbanspoon", :city => "L.A.", :sent => false)
+      @urbanspoon_restaurants_dc = Restaurant.where(:source => "Urbanspoon", :city => "Washington, D.C.", :sent => false)
+      @urbanspoon_restaurants_denver = Restaurant.where(:source => "Urbanspoon", :city => "Denver", :sent => false)
+      @urbanspoon_restaurants_birmingham = Restaurant.where(:source => "Urbanspoon", :city => "Birmingham", :sent => false)
+
       @city_restaurants_food = Restaurant.where(:source => "City-Food", :sent => false)
       @city_restaurants_liquor = Restaurant.where(:source => "City-Liquor", :sent => false)
 
