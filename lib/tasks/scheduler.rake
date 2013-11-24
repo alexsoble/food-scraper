@@ -102,8 +102,11 @@ task :scrape_city_portal => :environment do
 
 end
 
-task :send_scraping_email => :environment do
-
-  UserMailer.scraping_email.deliver
-    
+task :send_scraping_email_test => :environment do
+  UserMailer.scraping_email(true).deliver    
 end
+
+task :send_scraping_email => :environment do
+  UserMailer.scraping_email(false).deliver
+end
+
