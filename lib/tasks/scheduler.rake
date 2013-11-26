@@ -50,7 +50,11 @@ task :scrape_yelp => :environment do
   yelp_cities = [
     {:name => "Chicago", :url => 'http://www.yelp.com/c/chicago/restaurants'},
     {:name => "SF Bay Area", :url => 'http://www.yelp.com/c/sf/restaurants'},
-    {:name => "New York", :url => 'http://www.yelp.com/c/nyc/restaurants'}
+    {:name => "New York", :url => 'http://www.yelp.com/c/nyc/restaurants'},
+    {:name => "Boston", :url => "http://www.yelp.com/c/boston/restaurants"},
+    {:name => "L.A.", :url => "http://www.yelp.com/c/la/restaurants"},
+    {:name => "Washington, D.C.", :url => "http://www.yelp.com/c/dc/restaurants"},
+    {:name => "Denver", :url => "http://www.yelp.com/c/denver/restaurants"}
   ]
 
   yelp_cities.each do |yelp_city|
