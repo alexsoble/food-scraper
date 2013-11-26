@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class UserMailer < ActionMailer::Base
-  default from: "food.scraper.bot@gmail.com", cc: "asoble@gmail.com"
+  default from: "food.scraper.bot@gmail.com"
 
   def scraping_email(test)
 
@@ -35,7 +35,7 @@ class UserMailer < ActionMailer::Base
       if test == true 
         mail(to: "asoble@gmail.com", subject: "Report: New restaurants #{@today}")
       else
-        mail(to: "breadcrumb-leadgen@groupon.com", subject: "Report: New restaurants #{@today}")
+        mail(to: "breadcrumb-leadgen@groupon.com", cc: ["asoble@gmail.com", "annie@breadcrumb.com"], subject: "Report: New restaurants #{@today}")
         @new_restaurants.each do |r|
           r.sent = true
           r.save

@@ -8,13 +8,42 @@ class Restaurant < ActiveRecord::Base
     require "httparty"
     require "mechanize" 
 
-    if self.source == "Urbanspoon" && self.url.present?
+    if self.url.present?
       agent = Mechanize.new
       page = agent.get(self.url)
-      phone = page.search('div.phone.tel').text
-      self.update_attributes(:phone => phone)
+      if self.source == "Urbanspoon"
+        phone = page.search('div.phone.tel').text
+        if phone.present?
+          self.update_attributes(:phone => phone)
+        end
+      elsif self.source == "Yelp"
+        phone = page.search('span#bizPhone').text
+        if phone.present?
+          self.update_attributes(:phone => phone)
+        end
+      end
     end 
-
   end
 
+  def get_website
+    require "nokogiri"
+    require "httparty"
+    require "mechanize" 
+
+    # if self.url.present?
+    #   agent = Mechanize.new
+    #   page = agent.get(self.url)
+    #   if self.source == "Urbanspoon"
+    #     phone = page.search('div.phone.tel').text
+    #     if phone.present?
+    #       self.update_attributes(:phone => phone)
+    #     end
+    #   elsif self.source == "Yelp"
+    #     phone = page.search('span#bizPhone').text
+    #     if phone.present?
+    #       self.update_attributes(:phone => phone)
+    #     end
+    #   end
+    # end 
+  end
 end

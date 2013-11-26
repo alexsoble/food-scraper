@@ -62,6 +62,7 @@ task :scrape_yelp => :environment do
       @restaurant = Restaurant.new({name: name, url: "http://www.yelp.com#{href}", source: "Yelp", city: yelp_city[:name]})
       if @restaurant.save
         puts "#{@restaurant.name}, #{@restaurant.url}, #{@restaurant.city}"
+        @restaurant.get_phone
       else
         puts "Restaurant name already in database"
       end
