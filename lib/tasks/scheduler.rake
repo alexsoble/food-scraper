@@ -15,8 +15,13 @@ task :scrape_urbanspoon => :environment do
     {:name => "L.A.", :url => "http://www.urbanspoon.com/lb/5/best-restaurants-Los-Angeles?sort=date"},
     {:name => "Washington, D.C.", :url => "http://www.urbanspoon.com/lb/7/best-restaurants-Washington-DC?sort=date"},
     {:name => "Denver", :url => "http://www.urbanspoon.com/lb/17/best-restaurants-Denver?sort=date"},
-    {:name => "Birmingham", :url => "http://www.urbanspoon.com/lb/45/best-restaurants-Birmingham?sort=date"}
+    {:name => "Birmingham", :url => "http://www.urbanspoon.com/lb/45/best-restaurants-Birmingham?sort=date"},
+    {:name => "Atlanta", :url => "http://www.urbanspoon.com/lb/9/best-restaurants-Atlanta?sort=date"},
+    {:name => "Austin", :url => "http://www.urbanspoon.com/lb/11/best-restaurants-Austin?sort=date"},
+    {:name => "Seattle", :url => "http://www.urbanspoon.com/lb/1/best-restaurants-Seattle?sort=date"},
+    {:name => "Albuquerque", :url => "http://www.urbanspoon.com/lb/60/best-restaurants-Albuquerque?sort=date"}
   ]
+
   urbanspoon_cities.each do |urbanspoon_city|
     urbanspoon_page = agent.get(urbanspoon_city[:url])
     new_restaurants = urbanspoon_page.search('div.list.restaurants')
@@ -54,7 +59,11 @@ task :scrape_yelp => :environment do
     {:name => "Boston", :url => "http://www.yelp.com/c/boston/restaurants"},
     {:name => "L.A.", :url => "http://www.yelp.com/c/la/restaurants"},
     {:name => "Washington, D.C.", :url => "http://www.yelp.com/c/dc/restaurants"},
-    {:name => "Denver", :url => "http://www.yelp.com/c/denver/restaurants"}
+    {:name => "Denver", :url => "http://www.yelp.com/c/denver/restaurants"},
+    {:name => "Atlanta", :url => "http://www.yelp.com/c/atlanta/restaurants"},
+    {:name => "Austin", :url => "http://www.yelp.com/c/austin/restaurants"},
+    {:name => "Seattle", :url => "http://www.yelp.com/c/seattle/restaurants"},
+    {:name => "Albuquerque", :url => "http://www.yelp.com/c/albuquerque/restaurants"}
   ]
 
   yelp_cities.each do |yelp_city|
