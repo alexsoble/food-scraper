@@ -10,7 +10,7 @@
       <% @cities.each do |city| %>
         <% if @new_restaurants[city].present? %>
           <h3><%= city %></h3>
-          <% city_restaurants = @new_restaurants.group_by(&:source) %>
+          <% city_restaurants = @new_restaurants[city].group_by(&:source) %>
           <% sources = city_restaurants.keys %>
           <% sources.each do |source| %>
             <h4>Via <%= source %>:</h4>
