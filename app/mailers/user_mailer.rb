@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
     unless Time.now.sunday? || Time.now.saturday? 
       
       @new_restaurants = Restaurant.where(:sent => false).group_by(&:city)
-      @cities = @new_restaurants.keys
+      @cities = @new_restaurants.keys.sort
 
       # @chicago = Restaurant.where(:city => "Chicago", :sent => false)
       # @nyc = Restaurant.where(:city => "New York", :sent => false)
