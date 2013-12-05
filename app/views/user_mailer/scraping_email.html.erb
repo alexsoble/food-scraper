@@ -7,88 +7,18 @@
     <% if @new_restaurants.present? %>
       <h2>We've found new restaurant leads for you.</h2>
       <br/>
-      <% if @chicago.present? %>
-        <h3>Chicago<h3>
-        <% if @yelp_restaurants_chi.present? %>
-          <h4>Via Yelp:</h4>
-          <%= render "restaurant_website_view", :restaurants => @yelp_restaurants_chi %>
+      <% @cities.each do |city| %>
+        <% if @new_restaurants[city].present? %>
+          <h3><%= city %></h3>
+          <% city_restaurants = @new_restaurants.group_by(&:source) %>
+          <% sources = city_restaurants.keys %>
+          <% sources.each do |source| %>
+            <h4>Via <%= source %>:</h4>
+            <%= render "restaurant_website_view", :restaurants => city_restaurants[source] %>
+            <br/>
+          <% end %>
         <% end %>
-        <% if @urbanspoon_restaurants_chi.present? %>
-          <h4>Via Urbanspoon:</h4>
-          <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_chi %>
-        <% end %>
-        <% if @city_restaurants_food.present? %>
-          <h4>Via the City Data Portal (food inspections):</h4>
-          <%= render "restaurant_portal_view", :restaurants => @city_restaurants_food %>
-        <% end %>
-        <% if @city_restaurants_liquor.present? %>
-          <h4>Via the City Data Portal (liquor licenses):</h4>
-          <%= render "restaurant_portal_view", :restaurants => @city_restaurants_liquor %>
-        <% end %>
-        <br/>
       <% end %>
-
-      <% if @nyc.present? %>
-        <h3>New York<h3>
-        <% if @yelp_restaurants_nyc.present? %>
-          <h4>Via Yelp:</h4>
-          <%= render "restaurant_website_view", :restaurants => @yelp_restaurants_nyc %>
-        <% end %>
-        <% if @urbanspoon_restaurants_nyc.present? %>
-          <h4>Via Urbanspoon:</h4>
-          <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_nyc %>
-        <% end %>
-        <br/>
-      <% end %>
-
-      <% if @sf.present? %>
-        <h3>San Francisco Bay<h3>
-        <% if @yelp_restaurants_sf.present? %>
-          <h4>Via Yelp:</h4>
-          <%= render "restaurant_website_view", :restaurants => @yelp_restaurants_sf %>
-        <% end %>
-        <% if @urbanspoon_restaurants_sf.present? %>
-          <h4>Via Urbanspoon:</h4>
-          <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_sf %>
-        <% end %>
-        <br/>
-      <% end %>
-
-      <% if @urbanspoon_restaurants_boston.present? %>
-        <h3>Boston<h3>
-        <h4>Via Urbanspoon:</h4>
-        <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_boston %>
-        <br/>
-      <% end %>
-
-      <% if @urbanspoon_restaurants_la.present? %>
-        <h3>L.A.<h3>
-        <h4>Via Urbanspoon:</h4>
-        <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_la %>
-        <br/>
-      <% end %>
-
-      <% if @urbanspoon_restaurants_dc.present? %>
-        <h3>Washington, D.C.<h3>
-        <h4>Via Urbanspoon:</h4>
-        <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_dc %>
-        <br/>
-      <% end %>
-
-      <% if @urbanspoon_restaurants_denver.present? %>
-        <h3>Denver<h3>
-        <h4>Via Urbanspoon:</h4>
-        <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_denver %>
-        <br/>
-      <% end %>
-
-      <% if @urbanspoon_restaurants_birmingham.present? %>
-        <h3>Birmingham, AL<h3>
-        <h4>Via Urbanspoon:</h4>
-        <%= render "restaurant_website_view", :restaurants => @urbanspoon_restaurants_birmingham %>
-        <br/>
-      <% end %>
-
     <% else %>
       <h2>No new restaurants today.</h2>
     <% end %>
